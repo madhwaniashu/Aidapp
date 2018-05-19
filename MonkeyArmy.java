@@ -2,19 +2,20 @@ import java.io.*;
 import java.util.Scanner;
 public class MonkeyArmy
 {
+    
+    /*declaring constants and instance variable for the game*/
+    public final int health = 2000;
+    public int monkeysWon;
+    MonkeyArmy(){
+         this.monkeysWon = 0;
+    }
+
     /* This function takes last element as pivot,
        places the pivot element at its correct
        position in sorted array, and places all
        smaller (smaller than pivot) to left of
        pivot and all greater elements to right
        of pivot */
-  
-    public final int health = 2000;
-    public int monkeysWon;
-    MonkeyArmy(){
-         this.monkeysWon = 0;
-    }
-    
     int partition(int arr[], int low, int high)
     {
         int pivot = arr[high]; 
@@ -49,7 +50,7 @@ public class MonkeyArmy
             if(sum >= health)//able to defeat monkey within health 2000
                return 0;
         }
-        return i-1;
+        return i;
     }
     /* The main function that implements QuickSort()
       arr[] --> Array to be sorted,
@@ -66,7 +67,9 @@ public class MonkeyArmy
             // Recursively sort elements before
             // partition and after partition
             sort(arr, low, pi-1);
-            this.monkeysWon = this.damageSum(arr, low);//count of monkeys won
+           if(low > 0 ){
+            	this.monkeysWon = this.damageSum(arr, pi+1);//count of monkeys won
+            }
             if(this.monkeysWon != 0)//able to defeat monkey within health 2000
                return;
             if(pi == 0)
@@ -77,16 +80,9 @@ public class MonkeyArmy
    // Driver program
     public static void main(String args[]) throws Exception
     {
-    /*     File file = new File("C:\Users\aashu\Documents\Madhwani Documents\SoftwareEngineer-Summer-2018-master\SoftwareEngineer-Summer-2018-master\input.txt");
-         BufferedReader br = new BufferedReader(new FileReader(file));
- 
-        String st;
-        while ((st = br.readLine()) != null)
-            System.out.println(st);
-        }
-      */  
-        Scanner scanner = new Scanner(new File("C:\\Users\\aashu\\Documents\\Madhwani Documents\\SoftwareEngineer-Summer-2018-master\\SoftwareEngineer-Summer-2018-master\\input.txt"));
-        int arr [] = new int [100];
+   
+        Scanner scanner = new Scanner(new File("input.txt"));
+        int arr [] = {};
         int i = 0;
         while(scanner.hasNextInt()){
             if(i == 0)
@@ -95,14 +91,17 @@ public class MonkeyArmy
                arr[i++] = scanner.nextInt();
         }
         
-        //int arr[] = {10, 7, 8, 9, 1, 5};
+
         int n = arr.length;
  
         MonkeyArmy ob = new MonkeyArmy();
         ob.sort(arr, 0, n-1);
-        if(ob.monkeysWon != 0)
-        System.out.println("Maximum Number of monkeys won ");
-        System.out.println(ob.monkeysWon);
+        if(ob.monkeysWon > 0){
+        System.out.println("Maximum Number of monkeys won "+ ob.monkeysWon);
+        }
     }
    
 }
+
+
+
